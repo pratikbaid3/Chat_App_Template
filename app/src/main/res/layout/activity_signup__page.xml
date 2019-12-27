@@ -4,20 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:background="#ffffffff">
+    android:background="#FFFFFF"
+    tools:context=".Signup_Page">
+
 
     <ImageView
-        android:layout_width="410dp"
-        android:layout_height="250dp"
-        android:src="@drawable/login_page_vectorart"
+        android:layout_width="430dp"
+        android:layout_height="352dp"
+        android:layout_marginBottom="470dp"
+        android:src="@drawable/signup_page_vectorart"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.384" />
+
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -26,7 +33,7 @@
         app:layout_constraintVertical_bias="0.432">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtEmailIdLogin"
+            android:id="@+id/edtEmailSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
@@ -39,7 +46,36 @@
                 android:layout_marginLeft="46dp"
                 android:background="#0000"
                 android:gravity="left"
-                android:hint="Email Id"
+                android:hint="Email id"
+                android:padding="12dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="56dp"
+            android:layout_marginRight="56dp"
+            android:background="@color/colorPrimaryDark" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/edtUsernameSignup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:textColorHint="@android:color/darker_gray">
+
+            <EditText
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="46dp"
+                android:background="#0000"
+                android:gravity="left"
+                android:hint="Username"
                 android:padding="12dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textColorHint="@android:color/darker_gray"
@@ -56,7 +92,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/edtPasswordLogin"
+            android:id="@+id/edtPasswordSignup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/colorAccent"
@@ -88,65 +124,49 @@
             android:layout_marginRight="56dp"
             android:background="@color/colorPrimaryDark" />
     </LinearLayout>
+
     <Button
-        android:id="@+id/btnLoginLogin"
+        android:id="@+id/btnSignupSignup"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="252dp"
         android:layout_height="49dp"
         android:background="@drawable/btn_login_bg"
-        android:text="Login"
+        android:text="Sign up"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616"
-        android:foreground="?android:attr/selectableItemBackground"/>
-
-    <Button
-        android:id="@+id/btnSignupLogin"
-        style="@android:style/Widget.DeviceDefault.Button.Borderless"
-        android:layout_width="252dp"
-        android:layout_height="49dp"
-        android:background="@drawable/btn_signup_bg"
-        android:text="Sign up"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLoginLogin"
-        app:layout_constraintVertical_bias="0.142"
-        android:foreground="?android:attr/selectableItemBackground"/>
+        app:layout_constraintVertical_bias="0.714" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="or"
-        android:textSize="30sp"
+        android:layout_marginBottom="148dp"
+        android:text="or  "
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnFbLogin"
+        android:id="@+id/btnFbSignup"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/btn_fb"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btnGoogleLogin"
+        app:layout_constraintEnd_toStartOf="@id/btnGoogleSignup"
         app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.894" />
 
     <Button
-        android:id="@+id/btnGoogleLogin"
+        android:id="@+id/btnGoogleSignup"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -154,7 +174,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.777"
-        app:layout_constraintStart_toEndOf="@id/btnFbLogin"
+        app:layout_constraintStart_toEndOf="@id/btnFbSignup"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.894" />
 
@@ -162,20 +182,20 @@
         android:id="@+id/imageView"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/btnFbLogin"
-        app:layout_constraintEnd_toEndOf="@+id/btnFbLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnFbLogin"
-        app:layout_constraintTop_toTopOf="@+id/btnFbLogin"
+        app:layout_constraintBottom_toBottomOf="@+id/btnFbSignup"
+        app:layout_constraintEnd_toEndOf="@+id/btnFbSignup"
+        app:layout_constraintStart_toStartOf="@+id/btnFbSignup"
+        app:layout_constraintTop_toTopOf="@+id/btnFbSignup"
         app:srcCompat="@drawable/facebook" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        app:layout_constraintBottom_toBottomOf="@id/btnGoogleLogin"
-        app:layout_constraintEnd_toEndOf="@+id/btnGoogleLogin"
-        app:layout_constraintStart_toStartOf="@+id/btnGoogleLogin"
-        app:layout_constraintTop_toTopOf="@+id/btnGoogleLogin"
+        app:layout_constraintBottom_toBottomOf="@id/btnGoogleSignup"
+        app:layout_constraintEnd_toEndOf="@+id/btnGoogleSignup"
+        app:layout_constraintStart_toStartOf="@+id/btnGoogleSignup"
+        app:layout_constraintTop_toTopOf="@+id/btnGoogleSignup"
         app:srcCompat="@drawable/google" />
 
 
