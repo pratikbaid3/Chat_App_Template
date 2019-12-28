@@ -33,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser=mAuth.getCurrentUser();
         if(currentUser!=null)
         {
-            /**Intent intent=new Intent(MainActivity.this,Users_List_Chat.class);
+            Intent intent=new Intent(MainActivity.this,Users_List_Chat.class);
             startActivity(intent);
-            finish();**/
+            finish();
         }
     }
 
