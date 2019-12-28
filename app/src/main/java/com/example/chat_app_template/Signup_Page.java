@@ -3,6 +3,7 @@ package com.example.chat_app_template;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +15,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Signup_Page extends AppCompatActivity {
 
@@ -25,6 +28,7 @@ public class Signup_Page extends AppCompatActivity {
     Button Google;
 
     private FirebaseAuth mAuth;
+    private DatabaseReference mDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -33,6 +37,7 @@ public class Signup_Page extends AppCompatActivity {
         setContentView(R.layout.activity_signup__page);
 
         mAuth=FirebaseAuth.getInstance();
+        mDatabase=FirebaseDatabase.getInstance().getReference();
 
         emailId=findViewById(R.id.edtEmailSignup);
         password=findViewById(R.id.edtPasswordSignup);
@@ -47,19 +52,21 @@ public class Signup_Page extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                //Perform signup activity
+                //Perform sign up activity
                 mAuth.createUserWithEmailAndPassword(emailId.getEditText().getText().toString(), password.getEditText().getText().toString())
                         .addOnCompleteListener(Signup_Page.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful())
                                 {
-                                    //Sign up successful
-                                    FirebaseUser user = mAuth.getCurrentUser();
+                                    Intent intent=new Intent(Signup_Page.this,Users_List_Chat.class);
+                                    mDatabase.child("users").child(mAuth.getCurrentUser().getUid()).child("username").setValue(username.getEditText().getText().toString());
+                                    startActivity(intent);
+                                    finish();
                                 } 
                                 else {
-                                    //Signup error
-                                    Toast.makeText(Signup_Page.this, "", Toast.LENGTH_SHORT).show();
+                                    //Sign up error
+                                    Toast.makeText(Signup_Page.this, "Error in signing up", Toast.LENGTH_SHORT).show();
                                 }
 
                                 // ...

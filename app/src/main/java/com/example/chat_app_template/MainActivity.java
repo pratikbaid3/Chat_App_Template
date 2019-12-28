@@ -33,7 +33,9 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser=mAuth.getCurrentUser();
         if(currentUser!=null)
         {
-            //Go to chat home page
+            /**Intent intent=new Intent(MainActivity.this,Users_List_Chat.class);
+            startActivity(intent);
+            finish();**/
         }
     }
 
@@ -75,11 +77,15 @@ public class MainActivity extends AppCompatActivity {
                                 if (task.isSuccessful())
                                 {
                                     //Signin successful
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                } else {
+                                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                                    Intent intent=new Intent(MainActivity.this,Users_List_Chat.class);
+                                    startActivity(intent);
+                                    finish();
+
+                                }
+                                else {
                                     //Signin failed
-                                    Toast.makeText(MainActivity.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, "Authentication failed.",Toast.LENGTH_SHORT).show();
                                 }
 
                                 // ...
