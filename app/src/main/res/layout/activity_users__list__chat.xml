@@ -12,29 +12,14 @@
         android:layout_height="wrap_content">
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="140dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="138dp"
-        android:layout_marginEnd="132dp"
-        android:layout_marginBottom="58dp"
-        android:background="@drawable/btn_logout"
-        android:text="Logout"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnAddMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:backgroundTint="@color/colorPrimaryGreen"
 
         android:src="@drawable/add_icon" />

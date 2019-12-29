@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,7 +35,6 @@ public class Users_List_Chat extends AppCompatActivity
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private Button btnLogout;
     private FloatingActionButton btnAddMessage;
 
 
@@ -44,7 +46,6 @@ public class Users_List_Chat extends AppCompatActivity
         mDatabase= FirebaseDatabase.getInstance().getReference();
         mAuth=FirebaseAuth.getInstance();
         currentUser=mAuth.getCurrentUser();
-        btnLogout=findViewById(R.id.btnLogout);
         btnAddMessage=findViewById(R.id.btnAddMessage);
 
         btnAddMessage.setOnClickListener(new View.OnClickListener()
@@ -55,19 +56,6 @@ public class Users_List_Chat extends AppCompatActivity
                 Log.i("Pratik","Clicked");
             }
         });
-
-        btnLogout.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(Users_List_Chat.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
-
         initImageBitmaps();
     }
 
@@ -117,5 +105,24 @@ public class Users_List_Chat extends AppCompatActivity
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(Users_List_Chat.this, mUsername, mNotification,mUid);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(Users_List_Chat.this));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.my_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+
+        if(item.getItemId()==R.id.btnLogout);
+        FirebaseAuth.getInstance().signOut();
+        Intent intent = new Intent(Users_List_Chat.this, MainActivity.class);
+        startActivity(intent);
+        finish();
+        return super.onOptionsItemSelected(item);
     }
 }
