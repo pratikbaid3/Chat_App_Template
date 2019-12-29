@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     Button Google;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    static boolean calledAlready=false;
 
     @Override
     protected void onStart()
@@ -48,7 +49,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        if (!calledAlready)
+        {
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+            calledAlready = true;
+        }
         mAuth=FirebaseAuth.getInstance();
 
         emailId=findViewById(R.id.edtEmailIdLogin);
