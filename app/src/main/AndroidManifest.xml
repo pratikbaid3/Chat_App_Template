@@ -13,6 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Messages_Page"></activity>
         <activity android:name=".Users_List_Chat" />
         <activity android:name=".Signup_Page" />
         <activity android:name=".MainActivity">
