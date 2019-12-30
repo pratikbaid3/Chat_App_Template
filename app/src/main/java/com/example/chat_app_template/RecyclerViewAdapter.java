@@ -1,6 +1,7 @@
 package com.example.chat_app_template;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View v)
             {
+                Intent intent=new Intent(v.getContext(),Chat_Page.class);
+                v.getContext().startActivity(intent);
                 Toast.makeText(mContext, mUsername.get(position), Toast.LENGTH_SHORT).show();
             }
         });
