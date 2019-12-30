@@ -35,7 +35,6 @@ public class Users_List_Chat extends AppCompatActivity
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private FloatingActionButton btnAddMessage;
 
 
     @Override
@@ -46,16 +45,6 @@ public class Users_List_Chat extends AppCompatActivity
         mDatabase= FirebaseDatabase.getInstance().getReference();
         mAuth=FirebaseAuth.getInstance();
         currentUser=mAuth.getCurrentUser();
-        btnAddMessage=findViewById(R.id.btnAddMessage);
-
-        btnAddMessage.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                Log.i("Pratik","Clicked");
-            }
-        });
         initImageBitmaps();
     }
 

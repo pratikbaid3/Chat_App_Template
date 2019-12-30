@@ -6,10 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".Messages_Page">
 
+    <ImageView
+        android:id="@+id/noMessageVectorArt"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/no_messages_vectorart" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_messages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnAddMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/colorPrimaryGreen"
+
+        android:src="@drawable/add_icon" />
 
 </RelativeLayout>
