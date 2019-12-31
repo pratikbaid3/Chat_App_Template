@@ -50,7 +50,6 @@ public class Users_List_Chat extends AppCompatActivity
 
     private void initImageBitmaps()
     {
-        Log.i("Pratik","Entered initImageBitmap");
         mDatabase.child("users").addChildEventListener(new ChildEventListener()
         {
             @Override
@@ -58,7 +57,6 @@ public class Users_List_Chat extends AppCompatActivity
             {
                 if(!(dataSnapshot.getKey().equals(currentUser.getUid())))
                 {
-                    Log.i("Pratik",dataSnapshot.getKey());
                     mUid.add(dataSnapshot.getKey());
                     mUsername.add(dataSnapshot.child("username").getValue().toString());
                     mNotification.add("Send a message");

@@ -59,7 +59,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position)
     {
-        Log.d(TAG, "onBindViewHolder: called.");
         holder.txtUsername.setText(mUsername.get(position));
         holder.txtNotification.setText(mNotification.get(position));
         holder.imgIcon.setImageResource(R.drawable.profile_pic);
@@ -72,6 +71,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             public void onClick(View v)
             {
                 Intent intent=new Intent(v.getContext(),Chat_Page.class);
+                intent.putExtra("uid",mUid.get(position));
                 v.getContext().startActivity(intent);
                 Toast.makeText(mContext, mUsername.get(position), Toast.LENGTH_SHORT).show();
             }

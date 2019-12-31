@@ -15,15 +15,16 @@
         chatview:bubbleBackgroundRcv="@color/cardBg"
         chatview:bubbleBackgroundSend="#F5F5F5"
         chatview:bubbleElevation="elevated"/>
+</LinearLayout>
+
 
     <!--chatview:inputBackgroundColor=""
-chatview:inputUseEditorAction="" // true or false
-chatview:inputTextAppearance=""
-chatview:inputTextSize=""
-chatview:inputTextColor=""
-chatview:inputHint=""
-chatview:inputHintColor=""
-chatview:sendBtnIcon=""
-chatview:sendBtnIconTint=""
-chatview:sendBtnBackgroundTint=""-->
-</LinearLayout>
+    chatview:inputUseEditorAction="" // true or false
+    chatview:inputTextAppearance=""
+    chatview:inputTextSize=""
+    chatview:inputTextColor=""
+    chatview:inputHint=""
+    chatview:inputHintColor=""
+    chatview:sendBtnIcon=""
+    chatview:sendBtnIconTint=""
+    chatview:sendBtnBackgroundTint=""-->
