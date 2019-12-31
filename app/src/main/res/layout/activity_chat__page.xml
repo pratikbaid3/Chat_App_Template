@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         chatview:inputBackgroundColor="#F5F5F5"
         chatview:sendBtnBackgroundTint="@color/colorPrimaryDark"
-        chatview:bubbleBackgroundRcv="@color/cardBg"
+        chatview:bubbleBackgroundRcv="@color/colorPrimaryDark"
         chatview:bubbleBackgroundSend="#F5F5F5"
         chatview:bubbleElevation="elevated"/>
 </LinearLayout>
