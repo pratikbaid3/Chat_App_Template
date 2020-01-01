@@ -27,8 +27,8 @@ public class Chat_Page extends AppCompatActivity
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-    private int noOfChatMessage;
-    private int noOfChatAdded;
+
+    private boolean historyMessageLoaded=false;
 
     public class Conversation
     {
@@ -52,7 +52,6 @@ public class Chat_Page extends AppCompatActivity
         }
 
     }
-
     public class UserConversation
     {
 
@@ -83,15 +82,10 @@ public class Chat_Page extends AppCompatActivity
         mAuth=FirebaseAuth.getInstance();
         mDatabase= FirebaseDatabase.getInstance().getReference();
         currentUser=mAuth.getCurrentUser();
-
         chatView=findViewById(R.id.chatView);
 
-        /**ChatMessage chatMessage=new ChatMessage("Hi",8288282, ChatMessage.Type.RECEIVED);
-         chatView.addMessage(chatMessage);**/
 
-
-        final ArrayList<ChatMessage> chatMessageArrayList=new ArrayList<>();
-
+        //TODO: Debug the repeating sent message problem
 
         mDatabase.child("users").child(currentUser.getUid()).child("conversations").child(uid).addListenerForSingleValueEvent(new ValueEventListener()
         {
@@ -101,45 +95,41 @@ public class Chat_Page extends AppCompatActivity
                 if(dataSnapshot.child("conversationUid").exists())
                 {
                     String conversationUid=dataSnapshot.child("conversationUid").getValue().toString();
-                    noOfChatAdded=0;mDatabase.child("conversations").child(conversationUid).addListenerForSingleValueEvent(new ValueEventListener()
-                {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
-                    {
-                        noOfChatMessage= (int) dataSnapshot.getChildrenCount();
-                        Log.i("Pratik", String.valueOf(noOfChatMessage));
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
                     mDatabase.child("conversations").child(conversationUid).addChildEventListener(new ChildEventListener()
                     {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
                         {
                             String senderUid=dataSnapshot.child("senderUid").getValue().toString();
-                            if(senderUid.equals(currentUser.getUid()))
+
+
+                            //Before the history messages have been loaded we will fetch all the messages on the server which includes messages to and from the current user
+                            if(historyMessageLoaded==false)
                             {
-                                //The message is a Sent message
-                                Long timestamp= (Long) dataSnapshot.child("timestamp").getValue();
-                                ChatMessage chatMessage=new ChatMessage(dataSnapshot.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
-                                chatMessageArrayList.add(chatMessage);
-                                noOfChatAdded++;
+                                if(senderUid.equals(currentUser.getUid()))
+                                {
+                                    //The message is a Sent message
+                                    Long timestamp= (Long) dataSnapshot.child("timestamp").getValue();
+                                    ChatMessage chatMessage=new ChatMessage(dataSnapshot.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
+                                    chatView.addMessage(chatMessage);
+                                }
+                                else {
+                                    //The message is a Received message
+                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
+                                    chatView.addMessage(chatMessage);
+                                }
                             }
-                            else {
-                                //The message is a Received message
-                                ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
-                                chatMessageArrayList.add(chatMessage);
-                                noOfChatAdded++;
-                            }
-                            if(noOfChatAdded==noOfChatMessage)
+
+                            //After the history messages have been loaded we will fetch only the recieved messages
+                            else
                             {
-                                chatView.addMessages(chatMessageArrayList);
+                                if(!(senderUid.equals(currentUser.getUid())))
+                                {
+                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
+                                    chatView.addMessage(chatMessage);
+                                }
                             }
+
                         }
 
                         @Override
@@ -177,10 +167,7 @@ public class Chat_Page extends AppCompatActivity
             @Override
             public boolean sendMessage(final ChatMessage chatMessage)
             {
-
-                Log.i("Pratik",chatMessage.getFormattedTime());
-                final int numberOfChildren=0;
-
+                historyMessageLoaded=true;
                 mDatabase.child("users").child(currentUser.getUid()).child("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot)
