@@ -27,6 +27,8 @@ public class Chat_Page extends AppCompatActivity
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
+    private int noOfChatMessage;
+    private int noOfChatAdded;
 
     public class Conversation
     {
@@ -90,45 +92,22 @@ public class Chat_Page extends AppCompatActivity
 
         final ArrayList<ChatMessage> chatMessageArrayList=new ArrayList<>();
 
+
         mDatabase.child("users").child(currentUser.getUid()).child("conversations").child(uid).addListenerForSingleValueEvent(new ValueEventListener()
         {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot)
             {
-                String conversationUid=dataSnapshot.child("conversationUid").getValue().toString();
-                mDatabase.child("conversations").child(conversationUid).addChildEventListener(new ChildEventListener()
+                if(dataSnapshot.child("conversationUid").exists())
+                {
+                    String conversationUid=dataSnapshot.child("conversationUid").getValue().toString();
+                    noOfChatAdded=0;mDatabase.child("conversations").child(conversationUid).addListenerForSingleValueEvent(new ValueEventListener()
                 {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
                     {
-                        if(dataSnapshot.child("senderUid").getValue().toString().equals(currentUser.getUid()))
-                        {
-                            //The message is a Sent message
-                            Long timestamp= (Long) dataSnapshot.child("timestamp").getValue();
-                            ChatMessage chatMessage=new ChatMessage(dataSnapshot.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
-                            chatMessageArrayList.add(chatMessage);
-                        }
-                        else {
-                            //The message is a Received message
-                            ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
-                            chatMessageArrayList.add(chatMessage);
-                        }
-                        chatView.addMessages(chatMessageArrayList);
-                    }
-
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+                        noOfChatMessage= (int) dataSnapshot.getChildrenCount();
+                        Log.i("Pratik", String.valueOf(noOfChatMessage));
                     }
 
                     @Override
@@ -136,6 +115,54 @@ public class Chat_Page extends AppCompatActivity
 
                     }
                 });
+
+                    mDatabase.child("conversations").child(conversationUid).addChildEventListener(new ChildEventListener()
+                    {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                        {
+                            String senderUid=dataSnapshot.child("senderUid").getValue().toString();
+                            if(senderUid.equals(currentUser.getUid()))
+                            {
+                                //The message is a Sent message
+                                Long timestamp= (Long) dataSnapshot.child("timestamp").getValue();
+                                ChatMessage chatMessage=new ChatMessage(dataSnapshot.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
+                                chatMessageArrayList.add(chatMessage);
+                                noOfChatAdded++;
+                            }
+                            else {
+                                //The message is a Received message
+                                ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
+                                chatMessageArrayList.add(chatMessage);
+                                noOfChatAdded++;
+                            }
+                            if(noOfChatAdded==noOfChatMessage)
+                            {
+                                chatView.addMessages(chatMessageArrayList);
+                            }
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
             }
 
             @Override
@@ -152,6 +179,7 @@ public class Chat_Page extends AppCompatActivity
             {
 
                 Log.i("Pratik",chatMessage.getFormattedTime());
+                final int numberOfChildren=0;
 
                 mDatabase.child("users").child(currentUser.getUid()).child("conversations").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
