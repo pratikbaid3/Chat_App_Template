@@ -98,9 +98,9 @@ public class Chat_Page extends AppCompatActivity
                     mDatabase.child("conversations").child(conversationUid).addChildEventListener(new ChildEventListener()
                     {
                         @Override
-                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot2, @Nullable String s)
                         {
-                            String senderUid=dataSnapshot.child("senderUid").getValue().toString();
+                            String senderUid=dataSnapshot2.child("senderUid").getValue().toString();
 
 
                             //Before the history messages have been loaded we will fetch all the messages on the server which includes messages to and from the current user
@@ -109,13 +109,13 @@ public class Chat_Page extends AppCompatActivity
                                 if(senderUid.equals(currentUser.getUid()))
                                 {
                                     //The message is a Sent message
-                                    Long timestamp= (Long) dataSnapshot.child("timestamp").getValue();
-                                    ChatMessage chatMessage=new ChatMessage(dataSnapshot.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
+                                    Long timestamp= (Long) dataSnapshot2.child("timestamp").getValue();
+                                    ChatMessage chatMessage=new ChatMessage(dataSnapshot2.child("message").getValue().toString(),timestamp, ChatMessage.Type.SENT);
                                     chatView.addMessage(chatMessage);
                                 }
                                 else {
                                     //The message is a Received message
-                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
+                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot2.child("message").getValue().toString(), (Long) dataSnapshot2.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
                                     chatView.addMessage(chatMessage);
                                 }
                             }
@@ -125,7 +125,7 @@ public class Chat_Page extends AppCompatActivity
                             {
                                 if(!(senderUid.equals(currentUser.getUid())))
                                 {
-                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot.child("message").getValue().toString(), (Long) dataSnapshot.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
+                                    ChatMessage chatMessage = new ChatMessage(dataSnapshot2.child("message").getValue().toString(), (Long) dataSnapshot2.child("timestamp").getValue(), ChatMessage.Type.RECEIVED);
                                     chatView.addMessage(chatMessage);
                                 }
                             }
