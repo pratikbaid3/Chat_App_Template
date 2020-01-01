@@ -22,6 +22,8 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -43,6 +45,10 @@ public class Messages_Page extends AppCompatActivity
         setContentView(R.layout.activity_messages__page);
         btnAddMessage=findViewById(R.id.btnAddMessage);
 
+        mDatabase= FirebaseDatabase.getInstance().getReference();
+        mAuth=FirebaseAuth.getInstance();
+        currentUser=mAuth.getCurrentUser();
+
         btnAddMessage.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -54,16 +60,63 @@ public class Messages_Page extends AppCompatActivity
         });
 
         noMessagesVectorart=findViewById(R.id.noMessageVectorArt);
-        if(mUsername.size()!=0)
-        {
-            noMessagesVectorart.setVisibility(View.INVISIBLE);
-        }
+
 
         initImageBitmaps();
     }
     private void initImageBitmaps()
     {
-        initRecyclerView();
+        final String[] username = new String[1];
+
+        mDatabase.child("users").child(currentUser.getUid()).child("conversations").addChildEventListener(new ChildEventListener()
+        {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s)
+            {
+                final String uid=dataSnapshot.getKey();
+                final String notification=dataSnapshot.child("message").getValue().toString();
+                mDatabase.child("users").child(uid).addListenerForSingleValueEvent(new ValueEventListener()
+                {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                    {
+                        username[0] =dataSnapshot.child("username").getValue().toString();
+                        mUsername.add(username[0]);
+                        mUid.add(uid);
+                        mNotification.add(notification);
+                        noMessagesVectorart.setVisibility(View.INVISIBLE);
+                        initRecyclerView();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void initRecyclerView()
